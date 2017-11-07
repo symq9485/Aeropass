@@ -69,12 +69,15 @@ require_once('bbdd/conexion.php');
           if ($sentencia2 = mysqli_prepare($enlace, $query)) {
             mysqli_stmt_bind_param($sentencia2, 's', $codDestino);
             mysqli_stmt_execute($sentencia2);
-            $resultado = mysqli_stmt_get_result($sentencia2);
-            $result = $resultado;
-            while($fila=mysqli_fetch_array($result, MYSQLI_ASSOC)){
-              $query="DELETE FROM Pasajeros WHERE numVuelo=$fila[numVuelo]";
-              $resultado=mysqli_query($enlace, $query);
+            if(mysqli_stmt_get_result($sentencia2)){
+              $resultado = mysqli_stmt_get_result($sentencia2);
+              $result = $resultado;
+              while($fila=mysqli_fetch_array($result, MYSQLI_ASSOC)){
+                $query="DELETE FROM Pasajeros WHERE numVuelo=$fila[numVuelo]";
+                $resultado=mysqli_query($enlace, $query);
+              }
             }
+
             mysqli_stmt_close($sentencia2);
           }
 
