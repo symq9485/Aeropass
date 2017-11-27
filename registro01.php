@@ -4,11 +4,11 @@
     header('location: index.php?Sin_Trampa');
   }
   require_once('bbdd/conexion.php');
-
+/*
   echo('<pre>');
   print_r($_POST);
   echo('</pre>');
-
+*/
   switch ($_POST['cTipo']) {
     case 'pasajero':{
     $ciPasajero=$_POST['ciPasajero'];
@@ -17,13 +17,79 @@
     $telfPasajero=$_POST['telfPasajero'];
     $numVuelo=$_POST['numVuelo'];
 
-    $query= "INSERT INTO Pasajeros (ciPasajero, nombrePasajero, apellidoPasajero, telfPasajero, numVuelo) VALUES(?,?,?,?,?)";
-        if($sentencia = mysqli_prepare($enlace, $query)){
-          mysqli_stmt_bind_param($sentencia, "isssi",$ciPasajero, $nombrePasajero, $apellidoPasajero, $telfPasajero, $numVuelo);
-          mysqli_stmt_execute($sentencia);
-          mysqli_stmt_close($sentencia);
-          header('location: inicio.php?datos=registrados');
+    $query = "SELECT numVuelo FROM Vuelos WHERE numVuelo = $numVuelo";
+    $sentencia = mysqli_query($enlace, $query);
+
+    while($fila = mysqli_fetch_array($sentencia)){
+      $numVuelo2 = $fila['numVuelo'];
+    }
+
+      if($numVuelo2){
+        $query = "SELECT ciPasajero FROM Pasajeros WHERE ciPasajero = $ciPasajero";
+        $sentencia = mysqli_query($enlace, $query);
+
+        while($fila = mysqli_fetch_array($sentencia)){
+          $ciPasajero2 = $fila['ciPasajero'];
         }
+        if($ciPasajero2){
+          echo ('<script type="text/javascript">
+                  alert("El pasajero ya estaba registrado.\nSi desea cambiar sus datos Editelos");
+                 </script>');
+        }
+        else{
+          $query= "INSERT INTO Pasajeros (ciPasajero, nombrePasajero, apellidoPasajero, telfPasajero, numVuelo) VALUES(?,?,?,?,?)";
+              if($sentencia = mysqli_prepare($enlace, $query)){
+                mysqli_stmt_bind_param($sentencia, "isssi",$ciPasajero, $nombrePasajero, $apellidoPasajero, $telfPasajero, $numVuelo);
+                mysqli_stmt_execute($sentencia);
+                mysqli_stmt_close($sentencia);
+
+                $query = "SELECT * FROM Pasajeros WHERE ciPasajero = $ciPasajero";
+                $sentencia = mysqli_query($enlace, $query);
+
+                while($fila = mysqli_fetch_array($sentencia)){
+                  $ciPasajero = $fila['ciPasajero'];
+                  $nombrePasajero = $fila['nombrePasajero'];
+                  $apellidoPasajero = $fila['apellidoPasajero'];
+                  $telfPasajero = $fila['telfPasajero'];
+                  $numVuelo = $fila['numVuelo'];
+
+                  echo '<div class="container">
+                          <div class="col-lg-12" align="center">
+                            <table class="table table-responsive table-hover table-bordered">
+                              <thead>
+                                <tr>
+                                  <th colspan="5">Datos guardados</th>
+                                </tr>
+                                <tr>
+                                  <th>Cedula</th>
+                                  <th>Nombre</th>
+                                  <th>Apellido</th>
+                                  <th>Telefono</th>
+                                  <th>Num. Vuelo</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>'.$ciPasajero.'</td>
+                                  <td>'.$nombrePasajero.'</td>
+                                  <td>'.$apellidoPasajero.'</td>
+                                  <td>'.$telfPasajero.'</td>
+                                  <td>'.$numVuelo.'</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>';
+                }
+                //header('location: inicio.php?datos=registrados');
+              }
+        }
+      }
+      else{
+        echo ('<script type="text/javascript">
+                alert("En numero de vuelo no existe.\n\nIngrese un numero de vuelo valido.");
+               </script>');
+      }
 
     }
       break;

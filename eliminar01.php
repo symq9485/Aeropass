@@ -4,6 +4,10 @@ echo('<pre>');
 print_r($_GET);
 echo('</pre>');
 
+echo('<pre>');
+print_r($_POST);
+echo('</pre>');
+
   session_start();
   if(($_SESSION['lvl']!=1)&&($_SESSION['lvl']!=2)){
     header('location: index.php?Sin_Trampa');
@@ -21,8 +25,14 @@ require_once('bbdd/conexion.php');
     	    mysqli_stmt_bind_param($sentencia, "i",$ciPasajero);
     	    mysqli_stmt_execute($sentencia);
     	    mysqli_stmt_close($sentencia);
-    	    header('Location: inicio.php?datos=eliminados');
+          echo ('<script type="text/javascript">
+                  alert("Pasajero eliminado.");
+                 </script>');
+    	    //header('Location: inicio.php?datos=eliminados');
     	 } else {
+         echo ('<script type="text/javascript">
+                 alert("Pasajero no existe.");
+                </script>');
     	    header('Location:lista01.php?error');
     	 }
     }

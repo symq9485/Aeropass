@@ -13,6 +13,8 @@
     <meta name="application-name" content="Aeropass">
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="stylesheet" href="css/css1" />
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/registros.js"></script>
     <title>Aeropass</title>
 
 <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -66,20 +68,21 @@
               echo "<td><a href=\"eliminar01.php?ciPasajero=". $ciPasajero ."&cTipo=pasajero\">Eliminar</a></td>";
               echo "</tr>";
             }
-            echo('  <form action="registro01.php" method="post">');
+            echo('  <form>');
             if($_SESSION['lvl']==1){
               switch ($_POST['cTipo']) {
                 case 'pasajero':{
                   echo ('<tr>
-                  <td><input type="text" name="ciPasajero" value="" placeholder="Cedula" required></td>
-                  <td><input type="text" name="nombrePasajero" value="" placeholder="Nombre" required></td>
-                  <td><input type="text" name="apellidoPasajero" value="" placeholder="Apellido" required></td>
-                  <td><input type="text" name="telfPasajero" value="" placeholder="Telefono" required></td>
-                  <td><input type="text" name="numVuelo" value="" placeholder="Vuelo" required></td>
-                  <td><input type="hidden" name="cTipo" value="'.$_POST['cTipo'].'">
-                  <input type="submit" name="" value="Registrar"></td>
+                  <td><input id="ciPasajero" type="text" name="ciPasajero" value="" placeholder="Cedula" required></td>
+                  <td><input id="nombrePasajero" type="text" name="nombrePasajero" value="" placeholder="Nombre" required></td>
+                  <td><input id="apellidoPasajero" type="text" name="apellidoPasajero" value="" placeholder="Apellido" required></td>
+                  <td><input id="telfPasajero" type="text" name="telfPasajero" value="" placeholder="Telefono" required></td>
+                  <td><input id="numVuelo" type="text" name="numVuelo" value="" placeholder="Vuelo" required></td>
+                  <td><input id="cTipo" type="hidden" name="cTipo" value="'.$_POST['cTipo'].'">
+                  <input id="rpasajero" type="reset" name="" value="Registrar"></td>
                   <td><input type="reset" value="Reset"></td>
                   </tr>');
+
                 }
                 break;
               }
@@ -288,6 +291,7 @@
 
 </div>
 <hr />
+<?php echo ('<div id="datos"></div>');?>
     <footer>
       <div class="container">
         <div class="row">
