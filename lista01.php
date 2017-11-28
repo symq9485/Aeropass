@@ -1,5 +1,5 @@
 <?php
-  session_start();
+session_start();
   if(($_SESSION['lvl']!=1)&&($_SESSION['lvl']!=2)){
     header('location: index.php?Sin_Trampa');
   }
@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/css1" />
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/registros.js"></script>
+    <script src="js/eliminar.js"></script>
     <title>Aeropass</title>
 
 <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -64,8 +65,12 @@
               echo "<td>" .$apellidoPasajero. "</td>";
               echo "<td>" .$telfPasajero. "</td>";
               echo "<td>" .$numVuelo. "</td>";
-              echo "<td><a href=\"editar01.php?ciPasajero=". $ciPasajero. "&cTipo=pasajero\">Editar</a></td>";
-              echo "<td><a href=\"eliminar01.php?ciPasajero=". $ciPasajero ."&cTipo=pasajero\">Eliminar</a></td>";
+              echo '<form>
+                    <input id="eciPasajero" type="hidden" name="ciPasajero" value="'.$ciPasajero.'" />
+                    <input id="ecTipo" type="hidden" name="cTipo" value="'.$_POST['cTipo'].'">
+                    <td><input id="edPasajero" type="reset" value="Editar" /></td>
+                    <td><input id="epasajero" type="reset" value="Eliminar" /></td>
+                    </form>';
               echo "</tr>";
             }
             echo('  <form>');

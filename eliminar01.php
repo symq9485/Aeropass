@@ -1,5 +1,5 @@
 <?php
-
+/*
 echo('<pre>');
 print_r($_GET);
 echo('</pre>');
@@ -7,7 +7,7 @@ echo('</pre>');
 echo('<pre>');
 print_r($_POST);
 echo('</pre>');
-
+*/
   session_start();
   if(($_SESSION['lvl']!=1)&&($_SESSION['lvl']!=2)){
     header('location: index.php?Sin_Trampa');
@@ -33,7 +33,7 @@ require_once('bbdd/conexion.php');
          echo ('<script type="text/javascript">
                  alert("Pasajero no existe.");
                 </script>');
-    	    header('Location:lista01.php?error');
+    	    //header('Location:lista01.php?error');
     	 }
     }
 	    break;

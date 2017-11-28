@@ -2,8 +2,8 @@ $(document).ready(function(){
 	$(document).on('click','#epasajero',function()	{
 		$.ajax({
 			url: 'eliminar01.php',
-			type: 'POST',
-			data: {ciPasajero: $('#ciPasajero').val(), cTipo: $('#cTipo').val()},
+			type: 'GET',
+			data: {ciPasajero: $('#eciPasajero').val(), cTipo: $('#ecTipo').val()},
 			beforeSend: function(){
 				console.log($('#ciPasajero').val());
         console.log($('#cTipo').val());
